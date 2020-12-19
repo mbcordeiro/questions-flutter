@@ -16,10 +16,27 @@ class _QuestionsAppState extends State<QuestionsApp> {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> questions = [
-      'Qual a sua linguagem de programação favorita?',
-      'Qual a sua IDE favorita?'
+    final questions = [
+      {
+        'question': 'Qual a sua linguagem de programação favorita?',
+        'answers': ['Typescript', 'Java', 'Javascript', 'C#']
+      },
+      {
+        'question': 'Qual a sua IDE favorita?',
+        'answers': [
+          'Web Storm',
+          'Visual Studio Code',
+          'Visual Studio',
+          'Intellij'
+        ]
+      },
+      {
+        'question': 'Qual o seu framework favorito?',
+        'answers': ['AspNet Core', 'Spring boot', 'Angular', 'Laravel']
+      }
     ];
+
+    List<String> answers = questions[_selectedQuestion]['answers'];
 
     return MaterialApp(
       home: Scaffold(
@@ -28,10 +45,8 @@ class _QuestionsAppState extends State<QuestionsApp> {
         ),
         body: Column(
           children: <Widget>[
-            Question(questions.elementAt(_selectedQuestion)),
-            Answer('Resposta 1', _answer),
-            Answer('Resposta 1', _answer),
-            Answer('Resposta 1', _answer)
+            Question(questions[_selectedQuestion]['question']),
+            ...answers.map((text) => Answer(text, _answer)).toList(),
           ],
         ),
       ),
