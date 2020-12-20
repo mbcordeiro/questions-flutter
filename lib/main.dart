@@ -7,48 +7,58 @@ main() => runApp(new QuestionsApp());
 
 class _QuestionsAppState extends State<QuestionsApp> {
   var _selectedQuestion = 0;
-
+  final _questions = const [
+    {
+      'question': 'Qual a sua linguagem de programação favorita?',
+      'answers': ['Typescript', 'Java', 'Javascript', 'C#']
+    },
+    {
+      'question': 'Qual a sua IDE favorita?',
+      'answers': [
+        'Web Storm',
+        'Visual Studio Code',
+        'Visual Studio',
+        'Intellij'
+      ]
+    },
+    {
+      'question': 'Qual o seu framework favorito?',
+      'answers': ['AspNet Core', 'Spring boot', 'Angular', 'Laravel']
+    }
+  ];
   void _answer() {
-    setState(() {
-      _selectedQuestion++;
-    });
+    if (flagSelectedQuestion) {
+      setState(() {
+        _selectedQuestion++;
+      });
+    }
+  }
+
+  bool get flagSelectedQuestion {
+    return _selectedQuestion < _questions.length;
   }
 
   @override
   Widget build(BuildContext context) {
-    final questions = [
-      {
-        'question': 'Qual a sua linguagem de programação favorita?',
-        'answers': ['Typescript', 'Java', 'Javascript', 'C#']
-      },
-      {
-        'question': 'Qual a sua IDE favorita?',
-        'answers': [
-          'Web Storm',
-          'Visual Studio Code',
-          'Visual Studio',
-          'Intellij'
-        ]
-      },
-      {
-        'question': 'Qual o seu framework favorito?',
-        'answers': ['AspNet Core', 'Spring boot', 'Angular', 'Laravel']
-      }
-    ];
-
-    List<String> answers = questions[_selectedQuestion]['answers'];
-
+    List<String> answers =
+        flagSelectedQuestion ? _questions[_selectedQuestion]['answers'] : null;
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: Text('Perguntas'),
         ),
-        body: Column(
-          children: <Widget>[
-            Question(questions[_selectedQuestion]['question']),
-            ...answers.map((text) => Answer(text, _answer)).toList(),
-          ],
-        ),
+        body: flagSelectedQuestion
+            ? Column(
+                children: <Widget>[
+                  Question(_questions[_selectedQuestion]['question']),
+                  ...answers.map((text) => Answer(text, _answer)).toList(),
+                ],
+              )
+            : Center(
+                child: Text(
+                'Parabéns!',
+                style: TextStyle(fontSize: 28),
+              )),
       ),
     );
   }
