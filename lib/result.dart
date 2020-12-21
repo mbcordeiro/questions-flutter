@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 
 class Result extends StatelessWidget {
   final int point;
-  Result(this.point);
+  final void Function() onQuizRestart;
+
+  Result(
+    this.point,
+    this.onQuizRestart,
+  );
+
   String get feedback {
     if (point < 8) {
       return 'Parabéns';
@@ -17,10 +23,24 @@ class Result extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Text(
-      'Parabéns!',
-      style: TextStyle(fontSize: 28),
-    ));
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Center(
+          child: Text(
+            feedback,
+            style: TextStyle(fontSize: 28),
+          ),
+        ),
+        FlatButton(
+          child: Text(
+            'Reiniciar Questionário',
+            style: TextStyle(fontSize: 18),
+          ),
+          textColor: Colors.blue,
+          onPressed: onQuizRestart,
+        )
+      ],
+    );
   }
 }
