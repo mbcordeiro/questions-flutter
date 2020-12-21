@@ -7,29 +7,41 @@ main() => runApp(new QuestionsApp());
 
 class _QuestionsAppState extends State<QuestionsApp> {
   var _selectedQuestion = 0;
+  var _points = 0;
   final _questions = const [
     {
       'question': 'Qual a sua linguagem de programação favorita?',
-      'answers': ['Typescript', 'Java', 'Javascript', 'C#']
+      'answers': [
+        {'option': 'Typescript', 'point': 10},
+        {'option': 'Java', 'point': 5},
+        {'option': 'Javascript', 'point': 3},
+        {'option': 'C#', 'point': 1}
+      ]
     },
     {
       'question': 'Qual a sua IDE favorita?',
       'answers': [
-        'Web Storm',
-        'Visual Studio Code',
-        'Visual Studio',
-        'Intellij'
+        {'option': 'Web Storm', 'ponit': 1},
+        {'option': 'Visual Studio Code', 'point': 10},
+        {'option': 'Visual Studio', 'point': 5},
+        {'option': 'Intellij', 'point': 3},
       ]
     },
     {
       'question': 'Qual o seu framework favorito?',
-      'answers': ['AspNet Core', 'Spring boot', 'Angular', 'Laravel']
+      'answers': [
+        {'option': 'AspNet Core', 'point': 10},
+        {'option': 'Spring boot', 'point': 5},
+        {'option': 'Angular', 'point': 3},
+        {'option': 'Laravel', 'point': 1},
+      ]
     }
   ];
-  void _answer() {
+  void _answer(int point) {
     if (flagSelectedQuestion) {
       setState(() {
         _selectedQuestion++;
+        _points = point;
       });
     }
   }
@@ -50,7 +62,7 @@ class _QuestionsAppState extends State<QuestionsApp> {
                 questions: _questions,
                 selectedQuestion: _selectedQuestion,
                 answer: _answer)
-            : Result(),
+            : Result(_points),
       ),
     );
   }
