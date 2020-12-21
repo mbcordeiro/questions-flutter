@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import './question.dart';
-import './answer.dart';
+import './quiz.dart';
+import 'result.dart';
 
 main() => runApp(new QuestionsApp());
 
@@ -40,25 +40,17 @@ class _QuestionsAppState extends State<QuestionsApp> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> answers =
-        flagSelectedQuestion ? _questions[_selectedQuestion]['answers'] : null;
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: Text('Perguntas'),
         ),
         body: flagSelectedQuestion
-            ? Column(
-                children: <Widget>[
-                  Question(_questions[_selectedQuestion]['question']),
-                  ...answers.map((text) => Answer(text, _answer)).toList(),
-                ],
-              )
-            : Center(
-                child: Text(
-                'Parabéns!',
-                style: TextStyle(fontSize: 28),
-              )),
+            ? Quiz(
+                questions: _questions,
+                selectedQuestion: _selectedQuestion,
+                answer: _answer)
+            : Result(),
       ),
     );
   }
